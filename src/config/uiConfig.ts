@@ -132,7 +132,7 @@ const homePage = {
 
 export const UIConfig = {
   //   ----------------------------------  General ----------------------------------
-  theme: "themeOne", // Options: themeOne, themeTwo
+  theme: "themeTwo", // Options: themeOne, themeTwo
 
   //   ----------------------------------  Brand ----------------------------------
   brand: {

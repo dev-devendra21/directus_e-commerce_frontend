@@ -9,7 +9,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { UIConfig } from "@/config/uiConfig"; // adjust path as needed
-import { themeConfig } from "@/config/themeConfig";
+// import { themeConfig } from "@/config/themeConfig";
 
 const socialIcons: Record<string, React.ReactElement> = {
   facebook: (
@@ -24,9 +24,9 @@ const socialIcons: Record<string, React.ReactElement> = {
 };
 
 export default function Footer() {
-  const { footer, theme } = UIConfig;
-  const { logo } =
-    themeConfig[theme as keyof typeof themeConfig].desktop.header;
+  const { footer } = UIConfig;
+  // const { logo } =
+  //   themeConfig[theme as keyof typeof themeConfig].desktop.header;
 
   return (
     <footer className="bg-muted/30 border-t">
@@ -42,7 +42,7 @@ export default function Footer() {
                 height={footer.company.logo.height}
                 className="object-contain"
               />
-              <span className={`text-xl font-semibold ${logo.text}`}>
+              <span className={`text-xl font-semibold`}>
                 {footer.company.name}
               </span>
             </div>

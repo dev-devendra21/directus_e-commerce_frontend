@@ -15,14 +15,16 @@ import useStore from "@/store/useStore";
 import { toast } from "sonner";
 import { useGetCart } from "@/hooks/apis/queries/useCart";
 import { UIConfig } from "@/config/uiConfig"; // 🔑 central config
-import { themeConfig } from "@/config/themeConfig";
+// import { themeConfig } from "@/config/themeConfig";
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { theme } = UIConfig;
-  const { logo, authLinks, menuLinks } =
-    themeConfig[theme as keyof typeof themeConfig].desktop.header;
+
+  const { brand, navbar } = UIConfig;
+
+  // const { logo, authLinks, menuLinks } =
+  //   themeConfig[theme as keyof typeof themeConfig].desktop.header;
 
   const { isAuthenticated, user, logout } = useStore();
 
@@ -63,8 +65,6 @@ function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  const { brand, navbar } = UIConfig;
-
   return (
     <header
       className={`${
@@ -77,7 +77,7 @@ function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className={`flex items-center space-x-2 ${logo.position}`}
+            className={`flex items-center space-x-2`}
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <img
@@ -87,15 +87,11 @@ function Header() {
               height={brand.logo.height}
               className="h-auto"
             />
-            <span className={`text-xl font-semibold ${logo.text}`}>
-              {brand.name}
-            </span>
+            <span className={`text-xl font-semibold `}>{brand.name}</span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav
-            className={`hidden md:flex items-center space-x-6 ${menuLinks.position}`}
-          >
+          <nav className={`hidden md:flex items-center space-x-6 `}>
             {navbar.menuItems.map((item) => (
               <Link
                 key={item.href}
@@ -108,7 +104,7 @@ function Header() {
           </nav>
 
           {/* Right side */}
-          <div className={`flex items-center space-x-4 ${authLinks.position}`}>
+          <div className={`flex items-center space-x-4 `}>
             {/* Cart */}
             {navbar.showCart && (
               <Button

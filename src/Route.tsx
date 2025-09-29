@@ -4,24 +4,47 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { lazy } from "react";
 import { Toaster } from "sonner";
-import Layout from "./components/layout/Layout";
-import ErrorBoundary from "./components/ErrorBoundary";
-import useStore from "./store/useStore";
-import { UIConfig } from "./config/uiConfig";
+import Layout from "./shared/components/layout/Layout";
+import ErrorBoundary from "./shared/components/ErrorBoundary";
+import useStore from "./shared/store/useStore";
+import { UIConfig } from "./shared/config/uiConfig";
 
 // Page imports
-import HomePage from "./pages/HomePage";
-import ProductsPage from "./pages/ProductsPage";
-import ProductDetailsPage from "./pages/ProductDetailsPage";
-import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import CategoriesPage from "./pages/CategoriesPage";
-import LoginPage from "./pages/auth/LoginPage";
-import SignupPage from "./pages/auth/SignupPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import ProfilePage from "./pages/ProfilePage";
-import OrderDetailsPage from "./pages/OrderDetailsPage";
+const { type: variantType } = UIConfig;
+
+// Dynamically require the correct variant folder
+
+const HomePage = lazy(() => import(`./variants/${variantType}/pages/HomePage`));
+const ProductsPage = lazy(
+  () => import(`./variants/${variantType}/pages/ProductsPage`)
+);
+const ProductDetailsPage = lazy(
+  () => import(`./variants/${variantType}/pages/ProductDetailsPage`)
+);
+const CartPage = lazy(() => import(`./variants/${variantType}/pages/CartPage`));
+const CheckoutPage = lazy(
+  () => import(`./variants/${variantType}/pages/CheckoutPage`)
+);
+const CategoriesPage = lazy(
+  () => import(`./variants/${variantType}/pages/CategoriesPage`)
+);
+const LoginPage = lazy(
+  () => import(`./variants/${variantType}/pages/auth/LoginPage`)
+);
+const SignupPage = lazy(
+  () => import(`./variants/${variantType}/pages/auth/SignupPage`)
+);
+const NotFoundPage = lazy(
+  () => import(`./variants/${variantType}/pages/NotFoundPage`)
+);
+const ProfilePage = lazy(
+  () => import(`./variants/${variantType}/pages/ProfilePage`)
+);
+const OrderDetailsPage = lazy(
+  () => import(`./variants/${variantType}/pages/OrderDetailsPage`)
+);
 
 // Map string → component
 const pageComponents: Record<string, React.ElementType> = {

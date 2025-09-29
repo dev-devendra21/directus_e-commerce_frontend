@@ -28,6 +28,7 @@ import { useProducts } from "@/shared/hooks/apis/queries/useProducts";
 import { useCategories } from "@/shared/hooks/apis/queries/useCategory";
 
 import type { Product, ProductCategory } from "@/shared/types/product";
+import { motion } from "framer-motion";
 
 export default function ProductsPage() {
   const location = useLocation();
@@ -198,14 +199,24 @@ export default function ProductsPage() {
     <div className="container mx-auto px-4 py-8 mb-8">
       {/* Header */}
       <div className="mb-8">
-        <div className="text-center py-12 md:py-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="text-center py-12 md:py-16"
+        >
           <h1 className="md:text-9xl text-4xl font-semibold mb-4">
             Explore Our Shop
           </h1>
-        </div>
+        </motion.div>
 
         {/* Search and Controls */}
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center"
+        >
           <form onSubmit={handleSearch} className="flex gap-2 flex-1 max-w-md">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -241,7 +252,7 @@ export default function ProductsPage() {
               </SheetContent>
             </Sheet>
           </div>
-        </div>
+        </motion.div>
 
         <p className="text-muted-foreground mt-4">
           Showing {filteredProducts?.length} products
@@ -250,9 +261,14 @@ export default function ProductsPage() {
 
       <div className="flex gap-8">
         {/* Desktop Filters */}
-        <aside className="hidden md:block w-64 shrink-0">
+        <motion.aside
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="hidden md:block w-64 shrink-0"
+        >
           <FilterSidebar />
-        </aside>
+        </motion.aside>
 
         {/* Products Grid/List */}
         <div className="flex-1">
@@ -270,7 +286,12 @@ export default function ProductsPage() {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
               {filteredProducts?.map((product) => (
                 <Link key={product.id} to={`/product/${product.id}`}>
                   <Card
@@ -304,7 +325,7 @@ export default function ProductsPage() {
                   </div>
                 </Link>
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

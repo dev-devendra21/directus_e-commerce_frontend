@@ -2,6 +2,7 @@ import { Button } from "@/shared/components/ui/button";
 import clientConfig from "@/shared/config/indexConfig";
 import type { Slider } from "@/shared/types/slider";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const VariantSlider = ({
   slider,
@@ -11,7 +12,10 @@ const VariantSlider = ({
   handleGetStarted: (value: string) => void;
 }) => {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.7 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
       className="relative h-[400px]  md:h-[650px] flex items-center justify-between px-5 md:px-20 text-white bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${clientConfig.base_url}/assets/${slider.image})`,
@@ -20,7 +24,12 @@ const VariantSlider = ({
       <div className="absolute inset-0 bg-black/40"></div>
 
       {/* Content */}
-      <section className="relative z-10 max-w-2xl px-4">
+      <motion.div
+        initial={{ opacity: 0, x: -150 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="relative z-10 max-w-2xl px-4"
+      >
         <h1 className="text-2xl md:text-8xl font-bold mb-4 text-left">
           {slider.title}
         </h1>
@@ -34,8 +43,13 @@ const VariantSlider = ({
         >
           {slider.button_text || "Get Started"}
         </Button>
-      </section>
-      <section className="md:block hidden">
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="md:block hidden"
+      >
         <div className="bg-white p-5 rounded absolute top-30 right-35">
           <img
             src={`${clientConfig.base_url}/assets/${slider.products.thumbnail}`}
@@ -48,8 +62,8 @@ const VariantSlider = ({
             Explore the Product <ArrowRight className="inline-block ml-2" />
           </h5>
         </div>
-      </section>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

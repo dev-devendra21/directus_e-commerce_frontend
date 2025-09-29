@@ -46,6 +46,10 @@ const OrderDetailsPage = lazy(
   () => import(`./variants/${variantType}/pages/OrderDetailsPage`)
 );
 
+const AboutPage = lazy(
+  () => import(`./variants/${variantType}/pages/AboutPage`)
+);
+
 // Map string → component
 const pageComponents: Record<string, React.ElementType> = {
   HomePage,
@@ -59,6 +63,7 @@ const pageComponents: Record<string, React.ElementType> = {
   NotFoundPage,
   ProfilePage,
   OrderDetailsPage,
+  AboutPage,
 };
 
 export default function MainRoute() {

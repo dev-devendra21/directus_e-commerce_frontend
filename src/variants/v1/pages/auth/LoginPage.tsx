@@ -1,15 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ArrowLeft, Check, X } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, Check, X, ArrowRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
-import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import useStore from "@/shared/store/useStore";
 import { toast } from "sonner";
@@ -89,26 +81,25 @@ export default function LoginPage() {
             </Link>
           </Button>
 
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Welcome Back</CardTitle>
-              <CardDescription>
-                Sign in to your account to continue shopping
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-semibold">Sign In</h1>
+          </div>
+
+          <section>
+            <div>
               <form
                 onSubmit={handleSubmit(handleLoginForm)}
                 className="space-y-4"
               >
                 <div>
-                  <Label htmlFor="email" className="mb-2">
+                  <Label htmlFor="email" className="mb-2 text-xl">
                     Email
                   </Label>
-                  <Input
+                  <input
                     id="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="Enter your email"
+                    className="w-full border-b p-3 outline-0 focus:border-primary"
                     {...register("email")}
                   />
                   {errors.email &&
@@ -119,14 +110,15 @@ export default function LoginPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="password" className="mb-2">
+                  <Label htmlFor="password" className="mb-2 text-xl">
                     Password
                   </Label>
                   <div className="relative">
-                    <Input
+                    <input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
+                      className="w-full border-b p-3 outline-0 focus:border-primary"
                       {...register("password")}
                     />
                     <Button
@@ -153,10 +145,11 @@ export default function LoginPage() {
 
                 <Button
                   type="submit"
-                  className="w-full"
+                  className="w-full mt-5 p-6"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Signing in..." : "Sign In"}
+                  {isSubmitting ? "Signing in..." : "Sign In Now"}{" "}
+                  <ArrowRight className="ml-2 text-xl" />
                 </Button>
               </form>
 
@@ -177,8 +170,8 @@ export default function LoginPage() {
                   Forgot your password?
                 </Link>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
         </div>
       </div>
     </div>

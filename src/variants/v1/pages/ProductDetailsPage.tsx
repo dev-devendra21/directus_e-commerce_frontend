@@ -162,7 +162,7 @@ export default function ProductDetailsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product Image */}
         <div className="space-y-4">
-          <div className="relative aspect-square bg-white rounded-lg border overflow-hidden">
+          <Card className="relative aspect-square rounded-lg overflow-hidden">
             <Lens
               zoomFactor={2}
               lensSize={150}
@@ -175,7 +175,7 @@ export default function ProductDetailsPage() {
                 alt={currentProduct.title}
               />
             </Lens>
-          </div>
+          </Card>
         </div>
 
         {/* Product Info */}
@@ -184,31 +184,11 @@ export default function ProductDetailsPage() {
             <Badge variant="outline" className="mb-2 capitalize">
               {currentProduct.category.title}
             </Badge>
-            <h1 className="text-3xl mb-4">{currentProduct.title}</h1>
-
-            {/* Rating */}
-            {/* <div className="flex items-center gap-2 mb-4">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 ${
-                      i < Math.floor()
-                        ? "text-yellow-400 fill-current"
-                        : "text-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-lg">{currentProduct.rating.rate}</span>
-              <span className="text-muted-foreground">
-                ({currentProduct.rating.count} reviews)
-              </span>
-            </div> */}
+            <h1 className="text-3xl font-bold mb-4">{currentProduct.title}</h1>
 
             {/* Price */}
-            <div className="text-4xl mb-6">
-              &#8377;{selectedVariant?.price || currentProduct.price}
+            <div className="text-2xl font-semibold mb-6">
+              &#8377; {selectedVariant?.price || currentProduct.price}
             </div>
           </div>
 
@@ -227,13 +207,13 @@ export default function ProductDetailsPage() {
             <div className="space-y-2">
               <p className="flex items-center gap-2">
                 <span>Size:</span>
-                <span className="flex items-center justify-center gap-2">
+                <span className="flex items-center justify-center gap-4">
                   {currentProduct?.variants.map((v: Product_Variants) => {
                     if (!v.size) return "N/A";
                     return (
                       <span
                         key={v.id}
-                        className={`h-8 w-8 border rounded-md border-black flex items-center justify-center cursor-pointer ${
+                        className={`h-10 w-15 border rounded-md border-black flex items-center justify-center cursor-pointer ${
                           v.size === selectedSize ? "bg-primary text-white" : ""
                         }`}
                         onClick={() => handleSelectSizeAndVariant(v.size, v)}
@@ -326,22 +306,21 @@ export default function ProductDetailsPage() {
 
       {/* Related Products */}
       {relatedProducts?.length > 0 && (
-        <section className="mt-16">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl">Related Products</h2>
-            <Button variant="outline" asChild>
-              <Link to={`/products?category`}>View All in</Link>
-            </Button>
+        <section className="mt-20">
+          <div className="mb-8">
+            <h2 className="text-4xl font-semibold text-center">
+              Related Products
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((product: Product) => (
               <Link key={product.id} to={`/product/${product.id}`}>
                 <Card
-                  className={`group hover:shadow-lg transition-shadow overflow-hidden cursor-pointer pt-0`}
+                  className={`group hover:shadow-lg transition-shadow overflow-hidden`}
                 >
-                  <CardContent className={`p-0`}>
-                    <div className={`relative overflow-hidden h-56`}>
+                  <CardContent className={`p-3  `}>
+                    <div className={`relative overflow-hidden h-60`}>
                       <ImageWithFallback
                         src={product.thumbnail}
                         alt={product.title}
@@ -349,33 +328,23 @@ export default function ProductDetailsPage() {
                       />
                       <Badge className="absolute top-2 left-2 bg-primary">
                         {product.variants.reduce(
-                          (acc: number, variant: Product_Variants) =>
-                            acc + variant.quantity,
+                          (val, v) => val + v.quantity,
                           0
                         ) === 0
                           ? "Out of Stock"
                           : "In Stock"}
                       </Badge>
                     </div>
-
-                    <div className={`p-4 `}>
-                      <h3
-                        className={`line-clamp-2 mb-2 group-hover:text-primary transition-colors `}
-                      >
-                        {product.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                        {parse(String(product.description))}
-                      </p>
-
-                      <div className={`flex items-center justify-between `}>
-                        <span className="text-2xl">
-                          &#8377;{product?.price}
-                        </span>
-                      </div>
-                    </div>
                   </CardContent>
                 </Card>
+                <div className="mt-3">
+                  <h2
+                    className={`line-clamp-2 mb-2 group-hover:text-primary transition-colors text-2xl font-semibold`}
+                  >
+                    {product.title}
+                  </h2>
+                  <p className="text-xl">&#8377; {product.price}</p>
+                </div>
               </Link>
             ))}
           </div>

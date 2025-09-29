@@ -1,15 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ArrowLeft, Check, X } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft, Check, X, ArrowRight } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card";
-import { Input } from "@/shared/components/ui/input";
+
 import { Label } from "@/shared/components/ui/label";
 
 import { toast } from "sonner";
@@ -84,27 +77,26 @@ export default function SignupPage() {
             </Link>
           </Button>
 
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Create Account</CardTitle>
-              <CardDescription>
-                Join ShopHub and start your shopping journey
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+          <div className="text-center mb-14">
+            <h1 className="text-4xl font-semibold">Sign Up</h1>
+          </div>
+
+          <section>
+            <div>
               <form
                 onSubmit={handleSubmit(handleSignupForm)}
                 className="space-y-4"
               >
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="firstName" className="mb-2">
+                    <Label htmlFor="firstName" className="mb-2 text-xl">
                       First Name
                     </Label>
-                    <Input
+                    <input
                       type="text"
                       id="firstName"
                       placeholder="Enter your first name"
+                      className="w-full border-b p-3 outline-0 focus:border-primary"
                       {...register("firstName")}
                     />
                     {errors.firstName &&
@@ -115,13 +107,14 @@ export default function SignupPage() {
                       })}
                   </div>
                   <div>
-                    <Label htmlFor="lastName" className="mb-2">
+                    <Label htmlFor="lastName" className="mb-2 text-xl">
                       Last Name
                     </Label>
-                    <Input
+                    <input
                       type="text"
                       id="lastName"
                       placeholder="Enter your last name"
+                      className="w-full border-b p-3 outline-0 focus:border-primary"
                       {...register("lastName")}
                     />
                     {errors.lastName &&
@@ -134,14 +127,15 @@ export default function SignupPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="email" className="mb-2">
+                  <Label htmlFor="email" className="mb-2 text-xl">
                     Email
                   </Label>
-                  <Input
+                  <input
                     id="email"
                     type="email"
                     placeholder="Enter your email address"
                     {...register("email")}
+                    className="w-full border-b p-3 outline-0 focus:border-primary"
                   />
                   {errors.email &&
                     errorText({
@@ -151,14 +145,15 @@ export default function SignupPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="password" className="mb-2">
+                  <Label htmlFor="password" className="mb-2 text-xl">
                     Password
                   </Label>
                   <div className="relative">
-                    <Input
+                    <input
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a strong password"
+                      className="w-full border-b p-3 outline-0 focus:border-primary"
                       {...register("password")}
                     />
                     <Button
@@ -184,14 +179,15 @@ export default function SignupPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="confirmPassword" className="mb-2">
+                  <Label htmlFor="confirmPassword" className="mb-2 text-xl">
                     Confirm Password
                   </Label>
                   <div className="relative">
-                    <Input
+                    <input
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
+                      className="w-full border-b p-3 outline-0 focus:border-primary"
                       {...register("confirmPassword")}
                     />
                     <Button
@@ -220,14 +216,15 @@ export default function SignupPage() {
                 </div>
 
                 <div>
-                  <Label htmlFor="phone" className="mb-2">
+                  <Label htmlFor="phone" className="mb-2 text-xl">
                     Phone Number
                   </Label>
-                  <Input
+                  <input
                     {...register("phone")}
                     type="string"
                     id="phone"
                     placeholder="Phone Number"
+                    className="w-full border-b p-3 outline-0 focus:border-primary"
                   />
                   {errors.phone &&
                     errorText({
@@ -239,9 +236,10 @@ export default function SignupPage() {
                 <Button
                   disabled={isSubmitting}
                   type="submit"
-                  className="w-full"
+                  className="w-full mt-5 p-6"
                 >
-                  {isSubmitting ? "Please wait..." : "Create Account"}
+                  {isSubmitting ? "Please wait..." : "Sign Up Now"}
+                  <ArrowRight className="ml-2 text-xl" />
                 </Button>
               </form>
 
@@ -264,8 +262,8 @@ export default function SignupPage() {
                   Privacy Policy
                 </Link>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
         </div>
       </div>
     </div>

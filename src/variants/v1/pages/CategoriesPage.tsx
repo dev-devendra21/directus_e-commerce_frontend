@@ -59,7 +59,12 @@ export default function CategoriesPage() {
         className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-5"
       >
         {categories?.map((category: ProductCategory) => (
-          <div>
+          <motion.div
+            key={category.id}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
             <Card
               key={category.id}
               onClick={() => handleCardCategoryClick(category.title)}
@@ -78,7 +83,7 @@ export default function CategoriesPage() {
             <h3 className="capitalize group-hover:text-primary text-xl transition-colors mt-4 font-semibold">
               {category.title}
             </h3>
-          </div>
+          </motion.div>
         ))}
       </motion.div>
 

@@ -28,6 +28,7 @@ import {
 } from "@/shared/components/ui/carousel";
 import { BadgeCheckIcon, Earth, Recycle, Star, Truck } from "lucide-react";
 import { useGetTestimonials } from "@/shared/hooks/apis/queries/useTestimonials";
+import type { TestimonialProps } from "@/shared/types/testimonial";
 
 export default function HomePage() {
   // const { isAuthenticated } = useStore();
@@ -332,7 +333,7 @@ export default function HomePage() {
               <CarouselPrevious className="absolute left-[80%] md:left-[90%] top-[-20%] -translate-y-1/2 bg-background/70 hover:bg-background p-2 rounded-full shadow-md z-10"></CarouselPrevious>
               <CarouselNext className="absolute right-0 top-[-20%] -translate-y-1/2 bg-background/70 hover:bg-background p-2 rounded-full shadow-md z-10"></CarouselNext>
               <CarouselContent className="-ml-1">
-                {testimonials?.map((testimonial: any) => (
+                {testimonials?.map((testimonial: TestimonialProps) => (
                   <CarouselItem
                     key={testimonial?.id}
                     className="basis-full md:basis-1/2 cursor-pointer ml-5"

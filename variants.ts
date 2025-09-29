@@ -128,6 +128,7 @@ const variantOne = {
     { path: "/products", component: "ProductsPage", protected: false },
     { path: "/product/:id", component: "ProductDetailsPage", protected: false },
     { path: "/categories", component: "CategoriesPage", protected: false },
+    { path: "/about", component: "AboutPage", protected: false },
     { path: "/cart", component: "CartPage", protected: false },
     { path: "/order/:id", component: "OrderDetailsPage", protected: true },
     { path: "/checkout", component: "CheckoutPage", protected: true },

@@ -63,8 +63,8 @@ export default function CartPage() {
 
   if (
     !cartItems ||
-    cartItems[0]?.cart_item.length === 0 ||
-    carts.length === 0
+    cartItems[0]?.cart_item?.length === 0 ||
+    carts?.length === 0
   ) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
@@ -144,8 +144,8 @@ export default function CartPage() {
         <div>
           <h1 className="text-3xl mb-2">Shopping Cart</h1>
           <p className="text-muted-foreground">
-            {carts[0].cart_item.length}{" "}
-            {carts[0].cart_item.length === 1 ? "item" : "items"} in your cart
+            {carts[0].cart_item?.length}{" "}
+            {carts[0].cart_item?.length === 1 ? "item" : "items"} in your cart
           </p>
         </div>
         <Button variant="outline" asChild>
@@ -171,7 +171,7 @@ export default function CartPage() {
             </Button>
           </div>
 
-          {carts[0].cart_item.map((item: CartItem) => (
+          {carts[0].cart_item?.map((item: CartItem) => (
             <Card key={item.id}>
               <CardContent className="p-4">
                 <div className="flex gap-4">
@@ -276,7 +276,7 @@ export default function CartPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                {carts[0].cart_item.map((item: CartItem) => (
+                {carts[0]?.cart_item?.map((item: CartItem) => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span className="line-clamp-1">
                       {item?.product?.title || "Unknown Product"} ×{" "}

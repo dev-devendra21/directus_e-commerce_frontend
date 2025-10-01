@@ -62,9 +62,6 @@ export const getCartApi = async () => {
         "tax_total",
         "discount_amount",
         "customer.*",
-        "billing_address.*",
-        "shipping_address.*",
-        "coupons_id.*",
         "cart_item.id",
         "cart_item.quantity",
         "cart_item.price",
@@ -75,6 +72,8 @@ export const getCartApi = async () => {
         "cart_item.product.category.*",
         "cart_item.product_variant.*",
         "coupons_id.*",
+        "billing_address.*",
+        "shipping_address.*",
       ].join(","),
       deep: {
         cart_item: {

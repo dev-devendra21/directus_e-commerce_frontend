@@ -45,6 +45,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   const plugin = useRef(Autoplay({ delay: 2000 }));
+  const categoryPlugin = useRef(Autoplay({ delay: 2000 }));
 
   const handleCardCategoryClick = (title: string) => {
     navigate("/products", {
@@ -204,7 +205,10 @@ export default function HomePage() {
           </div>
 
           <div>
-            <Carousel plugins={[plugin.current]} className="w-full mb-8">
+            <Carousel
+              plugins={[categoryPlugin.current]}
+              className="w-full mb-8"
+            >
               <CarouselPrevious className="absolute left-[80%] md:left-[90%] top-[-20%] -translate-y-1/2 bg-background/70 hover:bg-background p-2 rounded-full shadow-md z-10"></CarouselPrevious>
               <CarouselNext className="absolute right-0 top-[-20%] -translate-y-1/2 bg-background/70 hover:bg-background p-2 rounded-full shadow-md z-10"></CarouselNext>
               <CarouselContent className="-ml-1">
@@ -225,7 +229,7 @@ export default function HomePage() {
                             <ImageWithFallback
                               src={category?.images?.id}
                               alt={category?.title}
-                              className={`object-cover bg-white group-hover:scale-105 transition-transform duration-300 w-full h-64`}
+                              className={`object-cover group-hover:scale-105 transition-transform duration-300 w-full h-64`}
                             />
                           </div>
                         </CardContent>

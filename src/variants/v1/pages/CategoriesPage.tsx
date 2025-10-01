@@ -75,7 +75,7 @@ export default function CategoriesPage() {
                   <ImageWithFallback
                     src={category?.images?.id}
                     alt={category?.title}
-                    className={`object-cover bg-white group-hover:scale-105 transition-transform duration-300 w-full h-64`}
+                    className={`object-contain group-hover:scale-105 transition-transform duration-300 w-full h-64`}
                   />
                 </div>
               </CardContent>

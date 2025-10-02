@@ -70,7 +70,7 @@ export default function CategoriesPage() {
               onClick={() => handleCardCategoryClick(category.title)}
               className="group transition-shadow cursor-pointer group-hover:border-primary/50 "
             >
-              <CardContent className="px-3 flex flex-col items-center">
+              <CardContent className="px-3">
                 <div className="w-full h-full flex items-center justify-center">
                   <ImageWithFallback
                     src={category?.images?.id}

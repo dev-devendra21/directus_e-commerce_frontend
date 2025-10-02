@@ -4,7 +4,7 @@ import variants from "../../../variants";
 
 // variants options: variantOne (early stage), variantTwo, variantThree (not implemented yet)
 
-const { variantOne: variant } = variants;
+const { variantTwo: variant } = variants;
 
 export const UIConfig = {
   type: variant.name,
@@ -26,5 +26,6 @@ export const UIConfig = {
   // components
   components: {
     cardCss: variant.sharedComponents.Card,
+    buttonCss: variant.sharedComponents.Button,
   },
 };

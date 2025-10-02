@@ -1,5 +1,6 @@
 import variant_one_logo from "@/assets/variant_one.svg";
-import variant_two_logo from "@/assets/logo.png";
+import variant_two_logo from "@/assets/variant_two.svg";
+import variant_two_white_icon from "@/assets/variant_two_white_icon.svg";
 
 // ---------- Variant 1 ----------------------
 const variantOne = {
@@ -44,6 +45,7 @@ const variantOne = {
     "sidebar-accent-foreground": "oklch(0.205 0 0)",
     "sidebar-border": "oklch(0.922 0 0)",
     "sidebar-ring": "oklch(0.708 0 0)",
+    heading: "#0b0b0b",
   },
   sharedComponents: {
     Card: "",
@@ -142,71 +144,74 @@ const variantOne = {
 const variantTwo = {
   name: "v2",
   css: {
-    fontSize: "14px",
-    fontFamily: '"Inter", sans-serif',
+    "font-size": "16px",
+    "font-family": '"Inter", sans-serif',
     background: "#ffffff",
     foreground: "oklch(0.145 0 0)",
-    card: "#ffffff",
-    cardForeground: "oklch(0.145 0 0)",
+    card: "#F2F2F2",
+    "card-foreground": "oklch(0.145 0 0)",
     popover: "oklch(1 0 0)",
-    popoverForeground: "oklch(0.145 0 0)",
+    "popover-foreground": "oklch(0.145 0 0)",
     primary: "#030213",
-    primaryForeground: "oklch(1 0 0)",
+    "primary-foreground": "oklch(1 0 0)",
     secondary: "oklch(0.95 0.0058 264.53)",
-    secondaryForeground: "#030213",
+    "secondary-foreground": "#030213",
     muted: "#ececf0",
-    mutedForeground: "#717182",
+    "muted-foreground": "#717182",
     accent: "#e9ebef",
-    accentForeground: "#030213",
+    "accent-foreground": "#030213",
     destructive: "#d4183d",
-    destructiveForeground: "#ffffff",
+    "destructive-foreground": "#ffffff",
     border: "rgba(0, 0, 0, 0.1)",
     input: "transparent",
-    inputBackground: "#f3f3f5",
-    switchBackground: "#cbced4",
-    fontWeightMedium: "500",
-    fontWeightNormal: "400",
+    "input-background": "#f3f3f5",
+    "switch-background": "#cbced4",
+    "font-weight-medium": "500",
+    "font-weight-normal": "400",
     ring: "oklch(0.708 0 0)",
-    chart1: "oklch(0.646 0.222 41.116)",
-    chart2: "oklch(0.6 0.118 184.704)",
-    chart3: "oklch(0.398 0.07 227.392)",
-    chart4: "oklch(0.828 0.189 84.429)",
-    chart5: "oklch(0.769 0.188 70.08)",
+    "chart-1": "oklch(0.646 0.222 41.116)",
+    "chart-2": "oklch(0.6 0.118 184.704)",
+    "chart-3": "oklch(0.398 0.07 227.392)",
+    "chart-4": "oklch(0.828 0.189 84.429)",
+    "chart-5": "oklch(0.769 0.188 70.08)",
     radius: "0.625rem",
     sidebar: "oklch(0.985 0 0)",
-    sidebarForeground: "oklch(0.145 0 0)",
-    sidebarPrimary: "#030213",
-    sidebarPrimaryForeground: "oklch(0.985 0 0)",
-    sidebarAccent: "oklch(0.97 0 0)",
-    sidebarAccentForeground: "oklch(0.205 0 0)",
-    sidebarBorder: "oklch(0.922 0 0)",
-    sidebarRing: "oklch(0.708 0 0)",
+    "sidebar-foreground": "oklch(0.145 0 0)",
+    "sidebar-primary": "#030213",
+    "sidebar-primary-foreground": "oklch(0.985 0 0)",
+    "sidebar-accent": "oklch(0.97 0 0)",
+    "sidebar-accent-foreground": "oklch(0.205 0 0)",
+    "sidebar-border": "oklch(0.922 0 0)",
+    "sidebar-ring": "oklch(0.708 0 0)",
+    heading: "#0b0b0b",
   },
   sharedComponents: {
-    Card: "shadow-md",
+    Card: "border",
+    Button: "font-[manrope-thin] p-7 rounded-xl",
   },
 
   brand: {
-    name: "Shop",
+    name: "Kloths",
     logo: {
       src: variant_two_logo,
-      width: 50,
-      height: 50,
+      width: 120,
+      height: 100,
     },
     favicon: variant_two_logo,
   },
 
   navBarConfig: {
-    sticky: true,
     height: "64px",
 
     menuItems: [
       { label: "Home", href: "/" },
+      { label: "About", href: "/about" },
       { label: "Products", href: "/products" },
       { label: "Categories", href: "/categories" },
     ],
     mobileMenuItems: [
       { label: "Home", href: "/" },
+      { label: "About", href: "/about" },
       { label: "Products", href: "/products" },
       { label: "Categories", href: "/categories" },
     ],
@@ -231,9 +236,9 @@ const variantTwo = {
       description:
         "Your one-stop destination for quality products at great prices. We're committed to providing the best shopping experience.",
       logo: {
-        src: variant_two_logo,
-        width: 50,
-        height: 50,
+        src: variant_two_white_icon,
+        width: 80,
+        height: 80,
       },
     },
 
@@ -272,6 +277,7 @@ const variantTwo = {
 
   routes: [
     { path: "/", component: "HomePage", protected: false },
+    { path: "/about", component: "AboutPage", protected: false },
     { path: "/products", component: "ProductsPage", protected: false },
     { path: "/product/:id", component: "ProductDetailsPage", protected: false },
     { path: "/categories", component: "CategoriesPage", protected: false },

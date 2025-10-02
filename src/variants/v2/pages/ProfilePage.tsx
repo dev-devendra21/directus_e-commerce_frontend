@@ -96,64 +96,69 @@ const ProfilePage = () => {
   };
 
   return (
-    <section className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl mb-4">Profile</h1>
-      </div>
-      <div className="flex flex-col md:flex-row gap-4">
-        {/* Sidebar */}
-        <section className="profile-section">
-          <Card>
-            <CardContent>
-              <div className="flex justify-center">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
-                  fallbackSrc="https://via.placeholder.com/150"
-                  width={150}
-                  height={150}
-                  alt="Profile"
-                  className="w-32 h-32 rounded-full mt-2"
-                />
-              </div>
-              <div className="text-center mt-4">
-                <h2 className="text-xl font-semibold">
-                  {user?.first_name} {user?.last_name}
-                </h2>
-                <p className="text-gray-600">{user?.email}</p>
-              </div>
-              <Separator className="mt-4" />
-              <ul className="mt-4 space-y-2">
-                {profileSection.map((section) => (
-                  <li
-                    key={section}
-                    onClick={() => {
-                      handleActiveSection("", section);
-                    }}
-                  >
-                    <p
-                      className={`cursor-pointer ${
-                        activeSection === section
-                          ? "bg-primary text-white"
-                          : "hover:bg-accent"
-                      } py-2 px-4 rounded-md`}
-                    >
-                      {section}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </section>
+    <>
+      <section className="bg-[#FFE8F3] w-full h-1/4 p-30">
+        <h1 className="text-center text-4xl text-[#0b0b0b] font-[manrope-semibold]">
+          Profile
+        </h1>
+      </section>
 
-        {/* Content */}
-        <section className="w-full">
-          <Card>
-            <CardContent>{renderActiveSection()}</CardContent>
-          </Card>
-        </section>
-      </div>
-    </section>
+      <section className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row gap-4">
+          {/* Sidebar */}
+          <section className="profile-section">
+            <Card>
+              <CardContent>
+                <div className="flex justify-center">
+                  <ImageWithFallback
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80"
+                    fallbackSrc="https://via.placeholder.com/150"
+                    width={150}
+                    height={150}
+                    alt="Profile"
+                    className="w-32 h-32 rounded-full mt-2"
+                  />
+                </div>
+                <div className="text-center mt-4">
+                  <h2 className="text-xl font-semibold">
+                    {user?.first_name} {user?.last_name}
+                  </h2>
+                  <p className="text-gray-600">{user?.email}</p>
+                </div>
+                <Separator className="mt-4" />
+                <ul className="mt-4 space-y-2">
+                  {profileSection.map((section) => (
+                    <li
+                      key={section}
+                      onClick={() => {
+                        handleActiveSection("", section);
+                      }}
+                    >
+                      <p
+                        className={`cursor-pointer ${
+                          activeSection === section
+                            ? "bg-primary text-white"
+                            : "hover:bg-accent"
+                        } py-2 px-4 rounded-md`}
+                      >
+                        {section}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Content */}
+          <section className="w-full">
+            <Card>
+              <CardContent>{renderActiveSection()}</CardContent>
+            </Card>
+          </section>
+        </div>
+      </section>
+    </>
   );
 };
 

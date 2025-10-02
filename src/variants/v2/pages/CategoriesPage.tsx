@@ -30,64 +30,70 @@ export default function CategoriesPage() {
 
   if (isError) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-600">Error fetching categories</p>
-      </div>
+      <>
+        <section className="bg-[#FFE8F3] w-full h-1/4 p-30">
+          <h1 className="text-center text-4xl text-[#0b0b0b] font-[manrope-semibold]">
+            About Us
+          </h1>
+        </section>
+        <div className="min-h-screen flex items-center justify-center">
+          <p className="text-red-600">Error fetching categories</p>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl mb-4">Shop by Category</h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Explore our diverse range of product categories. From fashion to
-          electronics, find exactly what you're looking for in our curated
-          collections.
-        </p>
-      </div>
+    <>
+      <section className="bg-[#FFE8F3] w-full h-1/4 p-30">
+        <h1 className="text-center text-4xl text-[#0b0b0b] font-[manrope-semibold]">
+          Categories
+        </h1>
+      </section>
 
-      {/* Categories Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-5">
-        {categories?.map((category: ProductCategory) => (
-          <Card
-            key={category.id}
-            onClick={() => handleCardCategoryClick(category.title)}
-            className="group hover:shadow-lg transition-shadow cursor-pointer group-hover:border-primary/50 "
-          >
-            <CardContent className="px-3 flex flex-col items-center">
-              <div className="w-full h-full flex items-center justify-center">
-                <ImageWithFallback
-                  src={category?.images?.id}
-                  alt={category?.title}
-                  className={`object-cover bg-white group-hover:scale-105 transition-transform duration-300 w-full h-64`}
-                />
-              </div>
-              <h3 className="capitalize group-hover:text-primary transition-colors mt-3">
-                {category.title}
-              </h3>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <div className="container mx-auto px-4 py-8">
+        {/* Categories Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-5">
+          {categories?.map((category: ProductCategory) => (
+            <Card
+              key={category.id}
+              onClick={() => handleCardCategoryClick(category.title)}
+              className="group hover:shadow-lg transition-shadow overflow-hidden cursor-pointer py-0 border"
+            >
+              <CardContent className="p-3">
+                <div className="relative overflow-hidden h-56">
+                  <ImageWithFallback
+                    src={category?.images?.id}
+                    alt={category?.title}
+                    className={`object-contain bg-white group-hover:scale-105 transition-transform duration-300 w-full h-full rounded-lg`}
+                  />
+                </div>
+                <h3 className="text-center pt-2 text-sm font-[manrope-semibold]">
+                  {category.title}
+                </h3>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-      {/* Featured Section */}
-      <div className="bg-muted/30 rounded-lg p-8 text-center">
-        <h2 className="text-2xl mb-4">Can't Find What You're Looking For?</h2>
-        <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-          Browse all our products or use our search feature to find exactly what
-          you need. Our comprehensive collection has something for everyone.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild size="lg">
-            <Link to="/products">Browse All Products</Link>
-          </Button>
-          <Button variant="outline" asChild size="lg">
-            <Link to="/">Back to Home</Link>
-          </Button>
+        {/* Featured Section */}
+        <div className="bg-muted/30 rounded-lg p-8 text-center">
+          <h2 className="text-2xl mb-4">Can't Find What You're Looking For?</h2>
+          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Browse all our products or use our search feature to find exactly
+            what you need. Our comprehensive collection has something for
+            everyone.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button asChild size="lg">
+              <Link to="/products">Browse All Products</Link>
+            </Button>
+            <Button variant="outline" asChild size="lg">
+              <Link to="/">Back to Home</Link>
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

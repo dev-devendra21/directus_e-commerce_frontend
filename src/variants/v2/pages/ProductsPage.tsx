@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Search, Filter, Grid, List } from "lucide-react";
+import { Search, Filter } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Card, CardContent } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
-import parse from "html-react-parser";
+
 import {
   Select,
   SelectContent,
@@ -30,7 +30,11 @@ import { useProducts } from "@/shared/hooks/apis/queries/useProducts";
 import { useCategories } from "@/shared/hooks/apis/queries/useCategory";
 import { useCreateCart } from "@/shared/hooks/apis/mutations/useCart";
 
-import type { Product, ProductCategory } from "@/shared/types/product";
+import type {
+  Product,
+  Product_Variants,
+  ProductCategory,
+} from "@/shared/types/product";
 
 import useStore from "@/shared/store/useStore";
 import { useGetCart } from "@/shared/hooks/apis/queries/useCart";
@@ -58,7 +62,6 @@ export default function ProductsPage() {
     order as "asc" | "desc"
   );
 
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(
     products as Product[]
   );
@@ -243,199 +246,124 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl mb-4">Products</h1>
+    <>
+      <section className="bg-[#FFE8F3] w-full h-1/4 p-30">
+        <h1 className="text-center text-4xl text-[#0b0b0b] font-[manrope-semibold]">
+          Products
+        </h1>
+      </section>
 
-        {/* Search and Controls */}
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
-          <form onSubmit={handleSearch} className="flex gap-2 flex-1 max-w-md">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button type="submit">Search</Button>
-          </form>
+      <div className="container mx-auto px-4 py-8 md:py-20 md:px-10 ">
+        <div className="mb-8">
+          {/* Search and Controls */}
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+            <form
+              onSubmit={handleSearch}
+              className="flex gap-2 flex-1 max-w-md"
+            >
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              <Button type="submit">Search</Button>
+            </form>
 
-          <div className="flex items-center gap-2">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="md:hidden">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filters
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <SheetHeader>
-                  <SheetTitle>Filters</SheetTitle>
-                  <SheetDescription>
-                    Filter products by category, price, and more.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="mt-6 p-3">
-                  <FilterSidebar />
-                </div>
-              </SheetContent>
-            </Sheet>
-
-            <div className="flex border rounded-md">
-              <Button
-                variant={viewMode === "grid" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-                className="rounded-r-none"
-              >
-                <Grid className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-                className="rounded-l-none"
-              >
-                <List className="h-4 w-4" />
-              </Button>
+            <div className="flex items-center gap-2">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm" className="md:hidden">
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filters
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                  <SheetHeader>
+                    <SheetTitle>Filters</SheetTitle>
+                    <SheetDescription>
+                      Filter products by category, price, and more.
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6 p-3">
+                    <FilterSidebar />
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
+
+          <p className="text-muted-foreground mt-4">
+            Showing {filteredProducts?.length} products
+          </p>
         </div>
 
-        <p className="text-muted-foreground mt-4">
-          Showing {filteredProducts?.length} products
-        </p>
-      </div>
+        <div className="flex gap-8">
+          {/* Desktop Filters */}
+          <aside className="hidden md:block w-64 shrink-0">
+            <FilterSidebar />
+          </aside>
 
-      <div className="flex gap-8">
-        {/* Desktop Filters */}
-        <aside className="hidden md:block w-64 shrink-0">
-          <FilterSidebar />
-        </aside>
-
-        {/* Products Grid/List */}
-        <div className="flex-1">
-          {filteredProducts?.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                No products found matching your criteria.
-              </p>
-              <Button
-                variant="outline"
-                onClick={handleResetFilters}
-                className="mt-4"
-              >
-                Reset Filters
-              </Button>
-            </div>
-          ) : (
-            <div
-              className={
-                viewMode === "grid"
-                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                  : "space-y-4"
-              }
-            >
-              {filteredProducts?.map((product) => (
-                <Link key={product.id} to={`/product/${product.id}`}>
-                  <Card
-                    className={`group hover:shadow-lg transition-shadow pt-0 overflow-hidden ${
-                      viewMode === "list" ? "flex" : ""
-                    }`}
-                  >
-                    <CardContent
-                      className={`p-0 ${
-                        viewMode === "list" ? "flex w-full" : ""
-                      }`}
+          {/* Products Grid/List */}
+          <div className="flex-1">
+            {filteredProducts?.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">
+                  No products found matching your criteria.
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={handleResetFilters}
+                  className="mt-4"
+                >
+                  Reset Filters
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts?.map((product) => (
+                  <Link key={product.id} to={`/product/${product.id}`}>
+                    <Card
+                      className={`group hover:shadow-lg transition-shadow overflow-hidden cursor-pointer py-0 border`}
                     >
-                      <div
-                        className={`relative overflow-hidden ${
-                          viewMode === "list"
-                            ? "w-32 h-32 shrink-0"
-                            : "rounded-t-lg"
-                        }`}
-                      >
-                        <ImageWithFallback
-                          src={product.thumbnail}
-                          alt={product.title}
-                          className={`object-contain bg-white group-hover:scale-105 transition-transform duration-300  ${
-                            viewMode === "list"
-                              ? "w-full h-full"
-                              : "w-full h-48"
-                          }`}
-                        />
-                        <Badge className="absolute top-2 left-2 bg-primary">
-                          {product.variants.reduce(
-                            (val, v) => val + v.quantity,
-                            0
-                          ) === 0
-                            ? "Out of Stock"
-                            : "In Stock"}
-                        </Badge>
-                      </div>
-
-                      <div
-                        className={`p-4 ${
-                          viewMode === "list" ? "flex-1 flex flex-col" : ""
-                        }`}
-                      >
-                        <h3
-                          className={`line-clamp-2 mb-2 group-hover:text-primary transition-colors ${
-                            viewMode === "list" ? "text-lg" : ""
-                          }`}
-                        >
-                          {product.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                          {parse(String(product.description))}
-                        </p>
-
-                        <div
-                          className={`flex items-center justify-between ${
-                            viewMode === "list" ? "mt-auto" : ""
-                          }`}
-                        >
-                          <span className="text-2xl">
-                            &#8377;{product.price}
-                          </span>
-                          {/* <div>
-                            <Button
-                              size="sm"
-                              onClick={(e) =>
-                                handleAddToCart(
-                                  e,
-                                  product,
-                                  product.variants.reduce(
-                                    (val, v) => val + v.quantity,
-                                    0
-                                  )
-                                )
-                              }
-                              disabled={
-                                product.variants.reduce(
-                                  (val, v) => val + v.quantity,
-                                  0
-                                ) <= 0
-                              }
-                              className="shrink-0 cursor-pointer"
-                            >
-                              <ShoppingCart className="h-4 w-4" />
-                            </Button>
-                          </div> */}
+                      <CardContent className={`p-4`}>
+                        <div className={`relative overflow-hidden h-56`}>
+                          <ImageWithFallback
+                            src={product.thumbnail}
+                            alt={product.title}
+                            className={`object-contain bg-white group-hover:scale-105 transition-transform duration-300 w-full h-full rounded-lg`}
+                          />
+                          <Badge className="absolute top-2 left-2 bg-primary">
+                            {product.variants.reduce(
+                              (acc: number, variant: Product_Variants) =>
+                                acc + variant.quantity,
+                              0
+                            ) === 0
+                              ? "Out of Stock"
+                              : "In Stock"}
+                          </Badge>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          )}
+
+                        <div className="p-4 flex justify-between">
+                          <h3 className="">{product.title}</h3>
+
+                          <p className="font-semibold">
+                            &#8377; {product?.price}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

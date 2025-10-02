@@ -125,69 +125,76 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
-      <nav className="mb-8">
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <Link to="/" className="hover:text-primary">
-            Home
-          </Link>
-          <span>/</span>
-          <Link to="/products" className="hover:text-primary">
-            Products
-          </Link>
-          <span>/</span>
-          <Link
-            to={`/products?category`}
-            className="hover:text-primary capitalize"
-          >
-            {currentProduct.category.title}
-          </Link>
-          <span>/</span>
-          <span className="text-foreground line-clamp-1">
-            {currentProduct.title}
-          </span>
-        </div>
-      </nav>
+    <>
+      <section className="bg-[#FFE8F3] w-full h-1/4 p-30">
+        <h1 className="text-center text-4xl text-[#0b0b0b] font-[manrope-semibold]">
+          Product Details
+        </h1>
+      </section>
 
-      {/* Back Button */}
-      <Button variant="outline" asChild className="mb-6">
-        <Link to="/products">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Products
-        </Link>
-      </Button>
-
-      {/* Product Details */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Product Image */}
-        <div className="space-y-4">
-          <div className="relative aspect-square bg-white rounded-lg border overflow-hidden">
-            <Lens
-              zoomFactor={2}
-              lensSize={150}
-              isStatic={false}
-              ariaLabel="Zoom Area"
+      <div className="container mx-auto px-4 py-8 md:py-10 md:px-10">
+        {/* Breadcrumb */}
+        <nav className="mb-8">
+          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+            <Link to="/" className="hover:text-primary">
+              Home
+            </Link>
+            <span>/</span>
+            <Link to="/products" className="hover:text-primary">
+              Products
+            </Link>
+            <span>/</span>
+            <Link
+              to={`/products?category`}
+              className="hover:text-primary capitalize"
             >
-              <ImageWithFallback
-                className="w-full h-full object-contain p-8"
-                src={currentProduct.thumbnail}
-                alt={currentProduct.title}
-              />
-            </Lens>
-          </div>
-        </div>
-
-        {/* Product Info */}
-        <div className="space-y-6">
-          <div>
-            <Badge variant="outline" className="mb-2 capitalize">
               {currentProduct.category.title}
-            </Badge>
-            <h1 className="text-3xl mb-4">{currentProduct.title}</h1>
+            </Link>
+            <span>/</span>
+            <span className="text-foreground line-clamp-1">
+              {currentProduct.title}
+            </span>
+          </div>
+        </nav>
 
-            {/* Rating */}
-            {/* <div className="flex items-center gap-2 mb-4">
+        {/* Back Button */}
+        <Button variant="outline" asChild className="mb-6">
+          <Link to="/products">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Products
+          </Link>
+        </Button>
+
+        {/* Product Details */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Product Image */}
+          <div className="space-y-4">
+            <div className="relative aspect-square bg-white rounded-lg border overflow-hidden">
+              <Lens
+                zoomFactor={2}
+                lensSize={150}
+                isStatic={false}
+                ariaLabel="Zoom Area"
+              >
+                <ImageWithFallback
+                  className="w-full h-full object-contain p-8"
+                  src={currentProduct.thumbnail}
+                  alt={currentProduct.title}
+                />
+              </Lens>
+            </div>
+          </div>
+
+          {/* Product Info */}
+          <div className="space-y-6">
+            <div>
+              <Badge variant="outline" className="mb-2 capitalize">
+                {currentProduct.category.title}
+              </Badge>
+              <h1 className="text-3xl mb-4">{currentProduct.title}</h1>
+
+              {/* Rating */}
+              {/* <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -206,181 +213,175 @@ export default function ProductDetailsPage() {
               </span>
             </div> */}
 
-            {/* Price */}
-            <div className="text-4xl mb-6">
-              &#8377;{selectedVariant?.price || currentProduct.price}
-            </div>
-          </div>
-
-          {/* Description */}
-          <div>
-            <h3 className="text-lg mb-3">Description</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              {parse(String(currentProduct.description))}
-            </p>
-          </div>
-
-          <Separator />
-
-          <div className="space-y-4">
-            <h3 className="text-lg mb-3">Specifications</h3>
-            <div className="space-y-2">
-              <p className="flex items-center gap-2">
-                <span>Size:</span>
-                <span className="flex items-center justify-center gap-2">
-                  {currentProduct?.variants.map((v: Product_Variants) => {
-                    if (!v.size) return "N/A";
-                    return (
-                      <span
-                        key={v.id}
-                        className={`h-8 w-8 border rounded-md border-black flex items-center justify-center cursor-pointer ${
-                          v.size === selectedSize ? "bg-primary text-white" : ""
-                        }`}
-                        onClick={() => handleSelectSizeAndVariant(v.size, v)}
-                      >
-                        {v.size}
-                      </span>
-                    );
-                  })}
-                </span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span>Color:</span>
-                <span
-                  className={`h-8 w-8 inline-block border rounded-full border-black`}
-                  style={{ backgroundColor: currentProduct.color }}
-                  title={currentProduct.color}
-                ></span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span>Weight:</span>
-                <span>
-                  {selectedVariant?.weight}
-                  {selectedVariant?.weight_unit}
-                </span>
-              </p>
-              <p className="flex items-center gap-2">
-                <span>Quantity:</span>
-                <span>{selectedVariant?.quantity}</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Quantity and Add to Cart */}
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm mb-2 block">Quantity</label>
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={decrementQuantity}
-                  disabled={quantity <= 1}
-                >
-                  <Minus className="h-4 w-4" />
-                </Button>
-                <span className="px-4 py-2 border rounded-md min-w-[60px] text-center">
-                  {quantity}
-                </span>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={incrementQuantity}
-                  disabled={quantity >= (selectedVariant?.quantity ?? 1)}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
+              {/* Price */}
+              <div className="text-4xl mb-6">
+                &#8377;{selectedVariant?.price || currentProduct.price}
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <Button
-                onClick={() =>
-                  handleAddToCart(
-                    currentProduct,
-                    quantity,
-                    selectedVariant?.quantity ?? 0
-                  )
-                }
-                size="lg"
-                className="flex-1"
-                disabled={selectedVariant?.quantity === 0}
-              >
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Add to Cart - &#8377;
-                {selectedVariant?.price || currentProduct.price}
-              </Button>
+            {/* Description */}
+            <div>
+              <h3 className="text-lg mb-3">Description</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {parse(String(currentProduct.description))}
+              </p>
+            </div>
 
-              <Button
-                onClick={() => handleShareCurrentProduct(currentProduct)}
-                variant="outline"
-                size="lg"
-              >
-                <Share2 className="h-5 w-5" />
-              </Button>
+            <Separator />
+
+            <div className="space-y-4">
+              <h3 className="text-lg mb-3">Specifications</h3>
+              <div className="space-y-2">
+                <p className="flex items-center gap-2">
+                  <span>Size:</span>
+                  <span className="flex items-center justify-center gap-2">
+                    {currentProduct?.variants.map((v: Product_Variants) => {
+                      if (!v.size) return "N/A";
+                      return (
+                        <span
+                          key={v.id}
+                          className={`h-8 w-8 border rounded-md border-black flex items-center justify-center cursor-pointer ${
+                            v.size === selectedSize
+                              ? "bg-primary text-white"
+                              : ""
+                          }`}
+                          onClick={() => handleSelectSizeAndVariant(v.size, v)}
+                        >
+                          {v.size}
+                        </span>
+                      );
+                    })}
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <span>Color:</span>
+                  <span
+                    className={`h-8 w-8 inline-block border rounded-full border-black`}
+                    style={{ backgroundColor: currentProduct.color }}
+                    title={currentProduct.color}
+                  ></span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <span>Weight:</span>
+                  <span>
+                    {selectedVariant?.weight}
+                    {selectedVariant?.weight_unit}
+                  </span>
+                </p>
+                <p className="flex items-center gap-2">
+                  <span>Quantity:</span>
+                  <span>{selectedVariant?.quantity}</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Quantity and Add to Cart */}
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm mb-2 block">Quantity</label>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={decrementQuantity}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="px-4 py-2 border rounded-md min-w-[60px] text-center">
+                    {quantity}
+                  </span>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={incrementQuantity}
+                    disabled={quantity >= (selectedVariant?.quantity ?? 1)}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <Button
+                  onClick={() =>
+                    handleAddToCart(
+                      currentProduct,
+                      quantity,
+                      selectedVariant?.quantity ?? 0
+                    )
+                  }
+                  size="lg"
+                  className="flex-1"
+                  disabled={selectedVariant?.quantity === 0}
+                >
+                  <ShoppingCart className="mr-2 h-5 w-5" />
+                  Add to Cart - &#8377;
+                  {selectedVariant?.price || currentProduct.price}
+                </Button>
+
+                <Button
+                  onClick={() => handleShareCurrentProduct(currentProduct)}
+                  variant="outline"
+                  size="lg"
+                >
+                  <Share2 className="h-5 w-5" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Related Products */}
-      {relatedProducts?.length > 0 && (
-        <section className="mt-16">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl">Related Products</h2>
-            <Button variant="outline" asChild>
-              <Link to={`/products?category`}>View All in</Link>
-            </Button>
-          </div>
+        {/* Related Products */}
+        {relatedProducts?.length > 0 && (
+          <section className="mt-16">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-2xl">Related Products</h2>
+              <Button variant="outline" asChild>
+                <Link to={`/products?category`}>View All in</Link>
+              </Button>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {relatedProducts.map((product: Product) => (
-              <Link key={product.id} to={`/product/${product.id}`}>
-                <Card
-                  className={`group hover:shadow-lg transition-shadow overflow-hidden cursor-pointer pt-0`}
-                >
-                  <CardContent className={`p-0`}>
-                    <div className={`relative overflow-hidden h-56`}>
-                      <ImageWithFallback
-                        src={product.thumbnail}
-                        alt={product.title}
-                        className={`object-contain bg-white group-hover:scale-105 transition-transform duration-300 w-full h-full`}
-                      />
-                      <Badge className="absolute top-2 left-2 bg-primary">
-                        {product.variants.reduce(
-                          (acc: number, variant: Product_Variants) =>
-                            acc + variant.quantity,
-                          0
-                        ) === 0
-                          ? "Out of Stock"
-                          : "In Stock"}
-                      </Badge>
-                    </div>
-
-                    <div className={`p-4 `}>
-                      <h3
-                        className={`line-clamp-2 mb-2 group-hover:text-primary transition-colors `}
-                      >
-                        {product.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                        {parse(String(product.description))}
-                      </p>
-
-                      <div className={`flex items-center justify-between `}>
-                        <span className="text-2xl">
-                          &#8377;{product?.price}
-                        </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {relatedProducts.map((product: Product) => (
+                <Link key={product.id} to={`/product/${product.id}`}>
+                  <Card
+                    className={`group hover:shadow-lg transition-shadow overflow-hidden cursor-pointer py-0 border`}
+                  >
+                    <CardContent className={`p-4`}>
+                      <div className={`relative overflow-hidden h-56`}>
+                        <ImageWithFallback
+                          src={product.thumbnail}
+                          alt={product.title}
+                          className={`object-contain bg-white group-hover:scale-105 transition-transform duration-300 w-full h-full rounded-lg`}
+                        />
+                        <Badge className="absolute top-2 left-2 bg-primary">
+                          {product.variants.reduce(
+                            (acc: number, variant: Product_Variants) =>
+                              acc + variant.quantity,
+                            0
+                          ) === 0
+                            ? "Out of Stock"
+                            : "In Stock"}
+                        </Badge>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
+
+                      <div className="p-4 flex justify-between">
+                        <h3 className="">{product.title}</h3>
+
+                        <p className="font-semibold">
+                          &#8377; {product?.price}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </>
   );
 }

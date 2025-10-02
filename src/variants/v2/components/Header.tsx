@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { useGetCart } from "@/shared/hooks/apis/queries/useCart";
 import { UIConfig } from "@/shared/config/uiConfig"; // 🔑 central config
 
+import { motion, AnimatePresence } from "framer-motion";
+
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -63,44 +65,55 @@ function Header() {
 
   return (
     <header
-      className={`${
-        navbar.sticky ? "fixed top-0" : ""
-      } z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80`}
+      className={`w-full bg-transparent absolute z-100 px-5 pt-3 md:px-15`}
       style={{ height: navbar.height }}
     >
       <div className="container mx-auto">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link
-            to="/"
-            className={`flex items-center space-x-2 `}
-            onClick={() => setIsMobileMenuOpen(false)}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className=" order-1 md:order-2 md:mr-25"
           >
-            <img
-              src={brand.logo.src}
-              alt={brand.name}
-              width={brand.logo.width}
-              height={brand.logo.height}
-              className="h-auto"
-            />
-            <span className={`text-xl font-semibold `}>{brand.name}</span>
-          </Link>
+            <Link
+              to="/"
+              className={`flex items-center space-x-2`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <img
+                src={brand.logo.src}
+                alt={brand.name}
+                width={brand.logo.width}
+                height={brand.logo.height}
+                className="h-auto"
+              />
+            </Link>
+          </motion.div>
 
           {/* Desktop Nav */}
-          <nav className={`hidden md:flex items-center space-x-6 `}>
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`hidden md:flex items-center space-x-2 order-2 md:order-1`}
+          >
             {navbar.menuItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
-                className="transition-colors hover:text-primary"
+                className="p-2 hover:underline text-[#0b0b0b] font-semibold"
               >
                 {item.label}
               </Link>
             ))}
-          </nav>
+          </motion.nav>
 
           {/* Right side */}
-          <div className={`flex items-center space-x-4 `}>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`flex items-center space-x-4 order-3`}
+          >
             {/* Cart */}
             {navbar.showCart && (
               <Button
@@ -182,53 +195,32 @@ function Header() {
                 <Menu className="h-5 w-5" />
               )}
             </Button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-            {/* Mobile Navigation */}
-            <nav className="space-y-2 px-4">
-              {(navbar.mobileMenuItems || navbar.menuItems).map((item) => {
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className="block py-2 transition-colors hover:text-primary"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-
-              {isAuthenticated ? (
-                <>
-                  {navbar.authMenu.authenticated.map((item) =>
-                    item.action === "logout" ? (
-                      <button
-                        key="logout"
-                        onClick={handleLogout}
-                        className="block w-full text-left py-2 transition-colors hover:text-primary"
-                      >
-                        {item.label}
-                      </button>
-                    ) : (
-                      <Link
-                        key={item.href}
-                        to={item.href || "/"}
-                        className="block py-2 transition-colors hover:text-primary"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    )
-                  )}
-                </>
-              ) : (
-                <>
-                  {navbar.authMenu.guest.map((item) => (
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: "0px" }}
+              animate={{
+                height: "200px",
+              }}
+              exit={{ height: "-200px" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="w-full border-b bg-transparent backdrop-blur
+                 supports-[backdrop-filter]:bg-background/80 fixed top-[56px] z-[-1]"
+            >
+              {/* Mobile Navigation */}
+              <motion.nav
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, ease: "easeInOut", delay: 0.1 }}
+                exit={{ opacity: 0 }}
+                className="space-y-2 px-4"
+              >
+                {(navbar.mobileMenuItems || navbar.menuItems).map((item) => {
+                  return (
                     <Link
                       key={item.href}
                       to={item.href}
@@ -237,12 +229,50 @@ function Header() {
                     >
                       {item.label}
                     </Link>
-                  ))}
-                </>
-              )}
-            </nav>
-          </div>
-        )}
+                  );
+                })}
+
+                {isAuthenticated ? (
+                  <>
+                    {navbar.authMenu.authenticated.map((item) =>
+                      item.action === "logout" ? (
+                        <button
+                          key="logout"
+                          onClick={handleLogout}
+                          className="block w-full text-left py-2 transition-colors hover:text-primary"
+                        >
+                          {item.label}
+                        </button>
+                      ) : (
+                        <Link
+                          key={item.href}
+                          to={item.href || "/"}
+                          className="block py-2 transition-colors hover:text-primary"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      )
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {navbar.authMenu.guest.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        className="block py-2 transition-colors hover:text-primary"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </>
+                )}
+              </motion.nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
